@@ -36,6 +36,7 @@ runs:
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
+      shell: bash
 
     - name: Cache Composer packages
       id: composer-cache
@@ -48,9 +49,11 @@ runs:
           
     - name: Require test dependencies
       run: composer require silverstripe/recipe-cms=^4 --no-update
+      shell: bash
 
     - name: Install dependencies
       run: composer update --prefer-source --no-progress ${{ inputs.composer-stability }}
+      shell: bash
 
     # # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # # Docs: https://getcomposer.org/doc/articles/scripts.md
