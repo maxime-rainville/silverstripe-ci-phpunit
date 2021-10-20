@@ -1,0 +1,51 @@
+name: Silverstripe CMS PHPUnit tests
+description: Run PHPUnit test for a Siverstripe CMS module
+inputs:
+  phpVersion:
+    description: PHP Version to run the test against
+    required: true
+    default: 7.4
+  databaseDriver:
+    description: Which Database to use
+    required: true
+    default: mysql
+
+runs:
+  using: "composite"
+  steps:
+    # - name: Setup PHP
+    #   uses: shivammathur/setup-php@v2
+    #   with:
+    #     php-version: ${{ inputs.phpVersion }}
+    #     extensions: imagick, swoole
+        
+    # - name: Start mysql service
+    #   run: sudo /etc/init.d/mysql start
+    
+    # - uses: actions/checkout@v2
+
+    # - name: Validate composer.json and composer.lock
+    #   run: composer validate --strict
+
+    # - name: Cache Composer packages
+    #   id: composer-cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: vendor
+    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-php-
+          
+    # - name: Require test dependencies
+    #   run: composer require silverstripe/recipe-cms=^4 --no-update
+
+    # - name: Install dependencies
+    #   run: composer update --prefer-source --no-progress ${{ matrix.composer-stability }}
+
+    # # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    - name: Run test suite
+      env:
+        SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
+      run: vendor/bin/phpunit
