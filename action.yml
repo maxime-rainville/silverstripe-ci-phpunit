@@ -24,10 +24,8 @@ runs:
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
-        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'root'
-#         host port: 3307
+        mysql version: 5.7
+        mysql root password: root
         
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -59,9 +57,6 @@ runs:
       run: composer update --prefer-source --no-progress ${{ inputs.composer-stability }}
       shell: bash
 
-    # # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # # Docs: https://getcomposer.org/doc/articles/scripts.md
-    
     - name: Wait for MySQL
       run: |
         while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
@@ -71,8 +66,6 @@ runs:
 
     - name: Run test suite
       env:
-#         SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
-#         SS_DATABASE_PORT: 3307
         DB: MYSQL
         SS_ENVIRONMENT_TYPE: dev
         SS_DATABASE_CLASS: MySQLDatabase
