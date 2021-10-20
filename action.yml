@@ -61,6 +61,13 @@ runs:
 
     # # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # # Docs: https://getcomposer.org/doc/articles/scripts.md
+    
+    - name: Wait for MySQL
+      run: |
+        while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
+          sleep 1
+        done
+      shell: bash
 
     - name: Run test suite
       env:
