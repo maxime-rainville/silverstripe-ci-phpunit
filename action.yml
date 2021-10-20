@@ -49,3 +49,4 @@ runs:
       env:
         SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
       run: vendor/bin/phpunit
+      shell: bash
