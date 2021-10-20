@@ -19,8 +19,13 @@ runs:
     #     php-version: ${{ inputs.phpVersion }}
     #     extensions: imagick, swoole
         
-    # - name: Start mysql service
-    #   run: sudo /etc/init.d/mysql start
+    - name: Set up MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
+        mysql root password: ''
+        
     
     # - uses: actions/checkout@v2
 
@@ -46,7 +51,7 @@ runs:
     # # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      env:
-        SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
+#       env:
+#         SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
       run: vendor/bin/phpunit
       shell: bash
