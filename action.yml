@@ -19,6 +19,8 @@ runs:
   steps:
     - name: Kill local MySQL instance
       run: sude service mysql stop
+      shell: bash
+      
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
