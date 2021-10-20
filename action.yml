@@ -9,17 +9,14 @@ inputs:
     description: Which Database to use
     required: true
     default: mysql
+  composer-stability:
+    description: composer stability flag
+    required: true
+    default: --prefer-stable
 
 runs:
   using: "composite"
   steps:
-    # - name: Setup PHP
-    #   uses: shivammathur/setup-php@v2
-    #   with:
-    #     php-version: ${{ inputs.phpVersion }}
-    #     extensions: imagick, swoole
-    
-
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
@@ -28,26 +25,32 @@ runs:
         mysql root password: 'root'
         host port: 3307
         
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.phpVersion }}
+        extensions: imagick, swoole
+        
     
-    # - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    # - name: Validate composer.json and composer.lock
-    #   run: composer validate --strict
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
 
-    # - name: Cache Composer packages
-    #   id: composer-cache
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: vendor
-    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-php-
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
           
-    # - name: Require test dependencies
-    #   run: composer require silverstripe/recipe-cms=^4 --no-update
+    - name: Require test dependencies
+      run: composer require silverstripe/recipe-cms=^4 --no-update
 
-    # - name: Install dependencies
-    #   run: composer update --prefer-source --no-progress ${{ matrix.composer-stability }}
+    - name: Install dependencies
+      run: composer update --prefer-source --no-progress ${{ inputs.composer-stability }}
 
     # # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # # Docs: https://getcomposer.org/doc/articles/scripts.md
