@@ -18,7 +18,7 @@ runs:
   using: "composite"
   steps:
     - name: Kill local MySQL instance
-      run: sude service mysql stop
+      run: sudo service mysql stop
       shell: bash
       
     - name: Set up MySQL
