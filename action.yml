@@ -17,13 +17,15 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Kill local MySQL instance
+      run: sude service mysql stop
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
         mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
         mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
         mysql root password: 'root'
-        host port: 3307
+#         host port: 3307
         
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -61,7 +63,7 @@ runs:
     - name: Run test suite
       env:
 #         SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
-        SS_DATABASE_PORT: 3307
+#         SS_DATABASE_PORT: 3307
         DB: MYSQL
         SS_ENVIRONMENT_TYPE: dev
         SS_DATABASE_CLASS: MySQLDatabase
