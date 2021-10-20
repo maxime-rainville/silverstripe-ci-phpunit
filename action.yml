@@ -19,16 +19,17 @@ runs:
     #     php-version: ${{ inputs.phpVersion }}
     #     extensions: imagick, swoole
         
-   - run: sudo service mysql stop
-     shell: bash
+    - name: Kill local MySQL instance
+      run: sudo service mysql stop
+      shell: bash
 
 
-   - name: Set up MySQL
-     uses: mirromutth/mysql-action@v1.1
-     with:
-       mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
-       mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
-       mysql root password: 'root'
+    - name: Set up MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
+        mysql root password: 'root'
         
     
     # - uses: actions/checkout@v2
