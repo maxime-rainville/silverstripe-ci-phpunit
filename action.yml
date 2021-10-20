@@ -12,7 +12,7 @@ inputs:
   composer-stability:
     description: composer stability flag
     required: true
-    default: --prefer-stable
+    default: ''
 
 runs:
   using: "composite"
