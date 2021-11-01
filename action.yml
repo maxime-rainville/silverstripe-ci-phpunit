@@ -27,35 +27,35 @@ runs:
         mysql version: 5.7
         mysql root password: root
         
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ inputs.phpVersion }}
-        extensions: imagick, swoole
+    # - name: Setup PHP
+    #   uses: shivammathur/setup-php@v2
+    #   with:
+    #     php-version: ${{ inputs.phpVersion }}
+    #     extensions: imagick, swoole
         
     
-    - uses: actions/checkout@v2
+    # - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-      shell: bash
+    # - name: Validate composer.json and composer.lock
+    #   run: composer validate --strict
+    #   shell: bash
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+    # - name: Cache Composer packages
+    #   id: composer-cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: vendor
+    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-php-
           
-    - name: Require test dependencies
-      run: composer require silverstripe/recipe-cms=^4 --no-update
-      shell: bash
+    # - name: Require test dependencies
+    #   run: composer require silverstripe/recipe-cms=^4 --no-update
+    #   shell: bash
 
-    - name: Install dependencies
-      run: composer update --prefer-source --no-progress ${{ inputs.composer-stability }}
-      shell: bash
+    # - name: Install dependencies
+    #   run: composer update --prefer-source --no-progress ${{ inputs.composer-stability }}
+    #   shell: bash
 
     - name: Wait for MySQL
       run: |
