@@ -1,6 +1,12 @@
 name: Silverstripe CMS PHPUnit tests
 description: Run PHPUnit test for a Siverstripe CMS module
 
+inputs:
+  args:
+    description: Extra ars to pass to PHP Unit
+    required: false
+    default: ''
+
 runs:
   using: "composite"
   steps:
@@ -13,5 +19,5 @@ runs:
         SS_DATABASE_PASSWORD: ${{ env.SS_DATABASE_PASSWORD }}
         SS_DATABASE_NAME: ${{ env.SS_DATABASE_NAME }}
         SS_SQLITE_DATABASE_PATH: ${{ env.SS_SQLITE_DATABASE_PATH }}
-      run: vendor/bin/phpunit
+      run: vendor/bin/phpunit ${{ inputs.args }}
       shell: bash
