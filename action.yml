@@ -1,18 +1,5 @@
 name: Silverstripe CMS PHPUnit tests
 description: Run PHPUnit test for a Siverstripe CMS module
-inputs:
-  phpVersion:
-    description: PHP Version to run the test against
-    required: true
-    default: 7.4
-  databaseDriver:
-    description: Which Database to use
-    required: true
-    default: mysql
-  composer-stability:
-    description: composer stability flag
-    required: true
-    default: ''
 
 runs:
   using: "composite"
@@ -25,5 +12,6 @@ runs:
         SS_DATABASE_USERNAME: ${{ env.SS_DATABASE_USERNAME }}
         SS_DATABASE_PASSWORD: ${{ env.SS_DATABASE_PASSWORD }}
         SS_DATABASE_NAME: ${{ env.SS_DATABASE_NAME }}
+        SS_SQLITE_DATABASE_PATH: ${{ env.SS_SQLITE_DATABASE_PATH }}
       run: vendor/bin/phpunit
       shell: bash
